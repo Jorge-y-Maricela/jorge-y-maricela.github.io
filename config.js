@@ -77,14 +77,15 @@ window.INVITACION = {
   rsvp: {
     // URL de la aplicación web de Google Apps Script (ver LEEME.md, paso 2).
     endpoint: 'https://script.google.com/macros/s/AKfycbxVhFTgklz-mffCaEuhVYnTymUm9wkZsGdS1CC2bBzQ_FSa5Bxtas4xkTI_PVDIbiz8/exec',
-    fechaLimite: '2026-11-27',                               // ⚠ POR CONFIRMAR
+    // Fecha límite para confirmar (ej. '2026-11-27'). Vacía: se puede confirmar hasta el día de la boda.
+    fechaLimite: '',
     // true: solo quien abre su enlace personal (?i=CÓDIGO) ve la confirmación.
     // El enlace general es solo la invitación, sin confirmar asistencia.
     soloConEnlace: true,
     // Lugares máximos sin enlace personal (solo si soloConEnlace es false)
     pasesSinCodigo: 2,
-    // Número de WhatsApp de los novios, 10 dígitos, sin espacios. Ej. '9611234567'
-    whatsapp: '',
+    // WhatsApp de la novia (10 dígitos): respaldo para avisar o si algo falla al confirmar
+    whatsapp: '9619437014',
   },
 
   sitio: {

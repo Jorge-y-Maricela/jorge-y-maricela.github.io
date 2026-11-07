@@ -27,9 +27,9 @@ Opcionales, que se activan en `config.js`: itinerario, padrinos, regalos, galer�
 
 Todo el contenido está en **`config.js`**. Revisen las líneas marcadas con `⚠ POR CONFIRMAR`:
 
-- `rsvp.fechaLimite`: ahora es el 27 de noviembre.
+- `rsvp.fechaLimite`: vacía; se puede confirmar hasta el día de la boda.
 - `itinerario`, `padrinos`, `fotos` y `musica`: vacíos. Si se quedan vacíos, esas secciones no aparecen.
-- `rsvp.whatsapp`: número de los novios. Si se pone, aparece como respaldo para avisar por WhatsApp.
+- `rsvp.whatsapp`: WhatsApp de la novia, como respaldo para avisar por WhatsApp.
 
 `finEvento` (3:00 am) no se muestra: solo marca el fin en el calendario de los invitados.
 
