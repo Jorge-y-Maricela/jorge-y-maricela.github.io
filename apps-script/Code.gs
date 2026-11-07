@@ -1,3 +1,4 @@
+/** @OnlyCurrentDoc */
 /**
  * ============================================================================
  *  CONFIRMACIONES · Boda de Jorge & Maricela

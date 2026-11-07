@@ -76,7 +76,7 @@ window.INVITACION = {
 
   rsvp: {
     // URL de la aplicación web de Google Apps Script (ver LEEME.md, paso 2).
-    endpoint: '',
+    endpoint: 'https://script.google.com/macros/s/AKfycbxVhFTgklz-mffCaEuhVYnTymUm9wkZsGdS1CC2bBzQ_FSa5Bxtas4xkTI_PVDIbiz8/exec',
     fechaLimite: '2026-11-27',                               // ⚠ POR CONFIRMAR
     // true: solo quien abre su enlace personal (?i=CÓDIGO) ve la confirmación.
     // El enlace general es solo la invitación, sin confirmar asistencia.
