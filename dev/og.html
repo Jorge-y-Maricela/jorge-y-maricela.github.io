@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<!-- Plantilla de la imagen para compartir (1200×630) y de los íconos. Se captura con dev/generar_imagenes.sh -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500&family=Cormorant+Garamond:ital,wght@0,500;1,400&family=Parisienne&display=block">
+<link rel="stylesheet" href="../css/estilos.css">
+<style>
+  html, body { margin: 0; background: none; }
+  .og {
+    width: 1200px; height: 630px; position: relative; overflow: hidden;
+    display: grid; place-items: center; text-align: center;
+    background:
+      radial-gradient(ellipse 60% 70% at 50% 50%, rgba(239, 222, 182, .6), transparent 75%),
+      var(--grano), var(--damasco), var(--blanco);
+  }
+  .og::before, .og::after { content: ''; position: absolute; pointer-events: none; }
+  .og::before { inset: 22px; border: 1.5px solid var(--linea); }
+  .og::after { inset: 30px; border: 1px solid var(--linea-suave); }
+  .og .rama-a { position: absolute; width: 520px; top: -26px; left: -60px; transform: rotate(10deg); color: var(--oro); }
+  .og .rama-b { position: absolute; width: 520px; bottom: -26px; right: -60px; transform: rotate(190deg); color: var(--oro); }
+  .og .antes { font-family: var(--mayus); font-size: 26px; letter-spacing: .5em; color: var(--oro-osc); padding-left: .5em; }
+  .og .nombres {
+    font-family: var(--script); font-size: 132px; line-height: 1.15; padding: 0 .15em .1em;
+    background: var(--oro-texto); -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  .og .fecha { font-family: var(--mayus); font-size: 30px; letter-spacing: .22em; color: var(--tinta); }
+  .og .lugar { font-family: var(--serif); font-style: italic; font-size: 32px; color: var(--tinta-suave); margin-top: 8px; }
+  .og .sep { width: 340px; margin: 18px auto 22px; }
+
+  .icono-app {
+    width: 180px; height: 180px; display: grid; place-items: center; position: relative;
+    background: radial-gradient(circle at 50% 45%, #fffefb, #f3ead9);
+  }
+  .icono-app .corona { position: absolute; inset: 8px; color: var(--oro); }
+  .icono-app span { font-family: var(--mayus); font-size: 42px; color: var(--oro-osc); margin-top: -6px; letter-spacing: .02em; }
+  .icono-app i { font-family: var(--script); font-style: normal; font-size: 34px; color: var(--oro); }
+</style>
+</head>
+<body>
+  <div id="lienzo"></div>
+  <script src="../config.js"></script>
+  <script src="../js/decoracion.js"></script>
+  <script>
+    const D = window.Decoracion, N = window.INVITACION.novios;
+    const modo = new URLSearchParams(location.search).get('modo');
+    document.getElementById('lienzo').innerHTML = modo === 'icono'
+      ? `<div class="icono-app">${D.corona({ radio: 64, hojas: 13, tam: 19, hueco: 62, semilla: 5 })}<span>${N.iniciales[0]}<i>&amp;</i>${N.iniciales[1]}</span></div>`
+      : `<div class="og">
+          <div class="rama-a">${D.rama({ largo: 250, arco: -30, hojas: 13, tam: 30, semilla: 4 })}</div>
+          <div class="rama-b">${D.rama({ largo: 230, arco: -26, hojas: 12, tam: 28, semilla: 9 })}</div>
+          <div>
+            <p class="antes">NOS CASAMOS</p>
+            <p class="nombres">${N.el.nombre} &amp; ${N.ella.nombre}</p>
+            <div class="sep">${D.separador()}</div>
+            <p class="fecha">VIERNES · 11 · DICIEMBRE · 2026</p>
+            <p class="lugar">Chiapa de Corzo, Chiapas</p>
+          </div>
+        </div>`;
+  </script>
+</body>
+</html>
