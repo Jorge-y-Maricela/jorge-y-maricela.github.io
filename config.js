@@ -71,8 +71,12 @@ window.INVITACION = {
   // Ejemplo: [{ src: 'img/fotos/1.webp', alt: 'Jorge y Maricela en ...' }]
   fotos: [],
 
-  // Canción opcional que suena al abrir el sobre. Ejemplo: 'musica/cancion.mp3'
-  musica: '',
+  // Canción que empieza al abrir el sobre. Se usa la primera fuente que el
+  // teléfono pueda reproducir. Para quitarla, pon  musica: null
+  musica: {
+    fuentes: ['musica/cancion.m4a', 'musica/cancion.mp3'],
+    titulo: 'Nuestra canción',
+  },
 
   rsvp: {
     // URL de la aplicación web de Google Apps Script (ver LEEME.md, paso 2).

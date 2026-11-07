@@ -308,9 +308,15 @@
   function iniciarSobre() {
     const escena = $('#sobre-escena');
     if (sessionStorage.getItem('sobre-abierto') || params.has('sin-sobre')) {
+      // Sin sobre no hay toque previo: la música queda lista para que la inicien.
+      crearReproductor();
       return Promise.resolve(false);
     }
     $('#sobre-nombres').innerHTML = nombres;
+    if (M) {
+      $('.sobre-escena__pista').insertAdjacentHTML('afterend',
+        `<p class="sobre-escena__musica">${D.icono('musica')}Con música · sube el volumen</p>`);
+    }
     $('#sobre-sello').innerHTML = D.sello(N.iniciales);
     $('#sobre-carta').innerHTML = `
       <span class="carta__antes">Nos casamos</span>
@@ -337,30 +343,97 @@
   }
 
   // ---------------------------------------------------------------- Música
+  // Botón flotante: un disco dorado que gira mientras suena. Al empezar se abre
+  // unos segundos con el nombre de la canción y luego queda como un círculo.
+  const M = C.musica && C.musica.fuentes ? C.musica : null;
+  const VOLUMEN = 0.85;
   let audio = null;
-  function empezarMusica() {
-    if (!C.musica) return;
+  let rampa = null;
+  let pausaPorPestana = false;
+
+  function elegirFuente() {
+    const prueba = document.createElement('audio');
+    const tipo = (f) => (/\.mp3$/i.test(f) ? 'audio/mpeg' : 'audio/mp4; codecs="mp4a.40.2"');
+    return M.fuentes.find((f) => prueba.canPlayType(tipo(f))) || M.fuentes[M.fuentes.length - 1];
+  }
+
+  // Sube o baja el volumen poco a poco (en iPhone el volumen es fijo y se salta).
+  function rampaVolumen(destino, ms, alTerminar) {
+    clearInterval(rampa);
+    const inicio = audio.volume, t0 = performance.now();
+    rampa = setInterval(() => {
+      const k = Math.min(1, (performance.now() - t0) / ms);
+      try { audio.volume = inicio + (destino - inicio) * k; } catch (_) { /* iOS */ }
+      if (k >= 1) { clearInterval(rampa); if (alTerminar) alTerminar(); }
+    }, 40);
+  }
+
+  function crearReproductor() {
+    if (!M || audio) return;
+    audio = new Audio();
+    audio.src = elegirFuente();
+    audio.loop = true;
+    audio.preload = 'auto';
+
     const boton = $('#boton-musica');
-    if (!audio) {
-      audio = new Audio(C.musica);
-      audio.loop = true;
-      audio.volume = 0.6;
-      boton.hidden = false;
-      boton.addEventListener('click', () => {
-        if (audio.paused) audio.play().catch(() => {}); else audio.pause();
-      });
-      const pintar = () => {
-        const sonando = !audio.paused;
-        boton.innerHTML = D.icono(sonando ? 'musica' : 'silencio');
-        boton.setAttribute('aria-pressed', String(sonando));
-        boton.setAttribute('aria-label', sonando ? 'Pausar la música' : 'Reproducir la música');
-        boton.classList.toggle('sonando', sonando);
-      };
-      audio.addEventListener('play', pintar);
-      audio.addEventListener('pause', pintar);
-      pintar();
+    boton.innerHTML = `
+      <span class="musica__disco" aria-hidden="true"><span class="musica__centro"></span></span>
+      <span class="musica__texto" aria-hidden="true">
+        <span class="musica__titulo">${esc(M.titulo || 'Nuestra canción')}</span>
+        <span class="musica__estado"></span>
+      </span>
+      <span class="musica__ondas" aria-hidden="true"><i></i><i></i><i></i></span>`;
+    boton.hidden = false;
+    requestAnimationFrame(() => boton.classList.add('visible'));
+
+    const pintar = () => {
+      const sonando = !audio.paused;
+      boton.classList.toggle('sonando', sonando);
+      boton.setAttribute('aria-pressed', String(sonando));
+      boton.setAttribute('aria-label', sonando ? 'Pausar la música' : 'Reproducir la música');
+      $('.musica__estado', boton).textContent = sonando ? 'Toca para pausar' : 'Toca para escuchar';
+    };
+    audio.addEventListener('play', pintar);
+    audio.addEventListener('pause', pintar);
+    pintar();
+
+    boton.addEventListener('click', () => {
+      if (audio.paused) reproducir();
+      else rampaVolumen(0, 450, () => audio.pause());
+    });
+
+    // Si cambian de app o de pestaña, la música se pausa y regresa al volver.
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden && !audio.paused) { pausaPorPestana = true; audio.pause(); }
+      else if (!document.hidden && pausaPorPestana) { pausaPorPestana = false; reproducir(); }
+    });
+
+    // Mientras escriben en el formulario, el botón se aparta para no estorbar.
+    document.addEventListener('focusin', (e) => {
+      if (e.target.matches('input, textarea')) boton.classList.add('apartado');
+    });
+    document.addEventListener('focusout', () => boton.classList.remove('apartado'));
+  }
+
+  function reproducir(msTitulo) {
+    if (!audio) return;
+    try { audio.volume = 0; } catch (_) { /* iOS */ }
+    const p = audio.play();
+    if (p && p.catch) p.catch(() => {});
+    rampaVolumen(VOLUMEN, 1800);
+    if (msTitulo) {
+      const boton = $('#boton-musica');
+      boton.classList.add('abierto');
+      setTimeout(() => boton.classList.remove('abierto'), msTitulo);
     }
-    audio.play().catch(() => {});
+  }
+
+  // Se llama al tocar el sello: el nombre de la canción se queda visible unos
+  // segundos después de que el sobre desaparece.
+  function empezarMusica() {
+    if (!M) return;
+    crearReproductor();
+    reproducir(reducirMovimiento ? 4500 : 7000);
   }
 
   // ---------------------------------------------------------------- Cuenta regresiva
