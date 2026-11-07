@@ -16,7 +16,7 @@
 
 const AJUSTES = {
   // Dirección donde está publicada la invitación (con / al final).
-  URL_INVITACION: 'https://jorgerealg-star.github.io/boda-jorge-maricela/',
+  URL_INVITACION: 'https://jorge-y-maricela.github.io/',
   // false: solo confirman los invitados con enlace personal (los de la pestaña Invitados).
   PERMITIR_SIN_CODIGO: false,
   // Lugares máximos para quien confirma sin enlace personal (si se permite).

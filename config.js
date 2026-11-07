@@ -90,6 +90,6 @@ window.INVITACION = {
 
   sitio: {
     // Dirección donde se publique la invitación (ver LEEME.md)
-    url: 'https://jorgerealg-star.github.io/boda-jorge-maricela/',
+    url: 'https://jorge-y-maricela.github.io/',
   },
 };

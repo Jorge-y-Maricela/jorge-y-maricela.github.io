@@ -39,7 +39,7 @@ ok(set(h) == {"Invitados", "Respuestas", "Resumen"}, "crea las tres pestañas")
 ok(inv[0][0] == "Código" and len(inv) == len(lista) + 1, f"encabezados + {len(lista)} invitados")
 codigos = [f[0] for f in inv[1:]]
 ok(codigos == [f[0] for f in lista], f"respeta los códigos de invitados.tsv: {codigos}")
-ok(inv[1][4] == f"https://jorgerealg-star.github.io/boda-jorge-maricela/?i={codigos[0]}", "enlace personal")
+ok(inv[1][4] == f"https://jorge-y-maricela.github.io/?i={codigos[0]}", "enlace personal")
 ok(all(f[5] == "" for f in inv[1:]), "sin teléfono no hay enlace de WhatsApp")
 ok(h["Resumen"][5][1].startswith("=SUMIF(Invitados!G2:G"), "fórmulas del resumen")
 
