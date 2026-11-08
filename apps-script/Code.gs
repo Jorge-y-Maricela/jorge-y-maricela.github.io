@@ -24,8 +24,8 @@ const AJUSTES = {
   // Mensaje para enviar la invitación. {nombre} y {enlace} se reemplazan solos.
   MENSAJE_WHATSAPP:
     '¡Hola, {nombre}! 💍\n\n' +
-    'Con mucha alegría queremos invitarte a nuestra boda el viernes 11 de diciembre de 2026 en Chiapa de Corzo.\n\n' +
-    'Esta es tu invitación personal; ahí mismo puedes confirmar tu asistencia:\n{enlace}\n\n' +
+    'Con mucha alegría queremos invitarte a nuestra boda el viernes 11 de diciembre de 2026 a las 5:00 pm en el Salón La Terraza, Fracc. Villarreal.\n\n' +
+    'Esta es tu invitación personal:\n{enlace}\n\n' +
     'Con cariño, Jorge & Maricela',
   HOJA_INVITADOS: 'Invitados',
   HOJA_RESPUESTAS: 'Respuestas',

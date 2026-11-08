@@ -206,12 +206,14 @@
 
   function padrinos() {
     if (!C.padrinos.length) return '';
+    // Con un solo grupo, su nombre va de título y no se repite como etiqueta.
+    const unico = C.padrinos.length === 1;
     return seccion('seccion--padrinos', `
-      ${titulo('Nuestros padrinos', 'anillos')}
+      ${titulo(unico ? esc(C.padrinos[0].titulo) : 'Nuestros padrinos', 'copas')}
       <div class="padrinos">
         ${C.padrinos.map((p) => `
           <div class="padres__grupo revelar">
-            <p class="etiqueta">${esc(p.titulo)}</p>
+            ${unico ? '' : `<p class="etiqueta">${esc(p.titulo)}</p>`}
             ${p.nombres.map((n) => `<p class="padres__nombre">${esc(n)}</p>`).join('')}
           </div>`).join(D.separador())}
       </div>`);
@@ -278,7 +280,7 @@
 
   function confirmacion() {
     const e = etapa();
-    if (e !== 'antes') return '';
+    if (e !== 'antes' || !C.rsvp.activo) return '';
     // El enlace general es solo la invitación: confirman únicamente los invitados con pase.
     if (C.rsvp.soloConEnlace && !codigo) return '';
     return seccion('seccion--rsvp', `
@@ -806,7 +808,21 @@
     if (b) b.addEventListener('click', () => iniciarConfirmacion());
   }
 
+  // Sin confirmación: el enlace personal solo muestra en la portada el nombre
+  // del invitado y sus lugares reservados.
+  async function cargarSoloInvitado() {
+    if (!codigo || !api.activa) return;
+    try {
+      const r = await api.invitado(codigo);
+      if (r.ok && r.invitado) {
+        rsvp.invitado = r.invitado;
+        mostrarInvitadoEnPortada();
+      }
+    } catch (_) { /* sin conexión: queda la invitación general */ }
+  }
+
   async function iniciarConfirmacion() {
+    if (!C.rsvp.activo) return cargarSoloInvitado();
     if (!caja()) return;
     let local = null;
     try { local = JSON.parse(localStorage.getItem(CLAVE_LOCAL) || 'null'); } catch (_) { /* nada */ }

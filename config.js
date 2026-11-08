@@ -23,7 +23,7 @@ window.INVITACION = {
   // de los invitados (la fiesta es hasta la madrugada).
   finEvento: '2026-12-12T03:00:00-06:00',
   zonaHoraria: 'America/Mexico_City',
-  ciudad: 'Chiapa de Corzo, Chiapas',
+  ciudad: 'Fracc. Villarreal, Chiapas',
 
   frase:
     'Dos caminos que se encontraron para convertirse en uno solo. ' +
@@ -34,9 +34,11 @@ window.INVITACION = {
     novio: ['Jorge Alfaro Morales', 'Martha Pérez Vega'],
   },
 
-  // Opcional. Ejemplo:
-  // { titulo: 'Padrinos de velación', nombres: ['Nombre Apellido', 'Nombre Apellido'] },
-  padrinos: [],
+  // Se pueden agregar más grupos, por ejemplo:
+  // { titulo: 'Padrinos de anillos', nombres: ['Nombre Apellido', 'Nombre Apellido'] },
+  padrinos: [
+    { titulo: 'Padrinos de brindis', nombres: ['Sr. Jorge Alfaro Morales', 'Sr. Pablo Germán Muñoz Escobar'] },
+  ],
 
   // Cada evento es una tarjeta con mapa. Si hay misa en otro lugar, agrega otro objeto.
   eventos: [
@@ -45,7 +47,7 @@ window.INVITACION = {
       icono: 'copas',               // anillos | iglesia | copas
       hora: '5:00 pm',
       lugar: 'Salón La Terraza',
-      direccion: ['Calle San Miguel, Fracc. Villarreal', 'Chiapa de Corzo, Chiapas'],
+      direccion: ['Calle San Miguel', 'Fracc. Villarreal, Chiapas'],
       mapa: 'https://maps.app.goo.gl/bp7ci8Yhs1ScKUcF9',
       coordenadas: [16.7093504, -93.0349929],
     },
@@ -79,7 +81,11 @@ window.INVITACION = {
   },
 
   rsvp: {
+    // false: no se pide confirmar asistencia. Los enlaces personales (?i=CÓDIGO)
+    // solo muestran el nombre del invitado y sus lugares reservados.
+    activo: false,
     // URL de la aplicación web de Google Apps Script (ver LEEME.md, paso 2).
+    // También se usa para leer el nombre y los pases de cada enlace personal.
     endpoint: 'https://script.google.com/macros/s/AKfycbxVhFTgklz-mffCaEuhVYnTymUm9wkZsGdS1CC2bBzQ_FSa5Bxtas4xkTI_PVDIbiz8/exec',
     // Fecha límite para confirmar (ej. '2026-11-27'). Vacía: se puede confirmar hasta el día de la boda.
     fechaLimite: '',

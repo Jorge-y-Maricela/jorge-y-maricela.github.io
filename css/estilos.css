@@ -207,6 +207,8 @@ body:not(.listo) .portada .revelar { opacity: 0; }
 .padres__divisor { width: 1px; height: 28px; margin: -6px auto; background: var(--linea); }
 .padres__grupo .etiqueta { margin-bottom: 10px; }
 .padres__nombre { font-size: 22px; line-height: 1.45; color: var(--tinta); }
+.padrinos { margin-top: 22px; }
+.padrinos .padres__nombre + .padres__nombre { margin-top: 4px; }
 .padres__honor { font-style: italic; font-size: 20px; color: var(--tinta-suave); max-width: 26ch; margin: 0 auto; }
 .padres__novios { margin-top: 20px; display: flex; flex-direction: column; gap: 4px; }
 .padres__novios span { font-family: var(--mayus); font-size: 17px; letter-spacing: .12em; color: var(--tinta); }
